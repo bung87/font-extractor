@@ -9,7 +9,7 @@ require!{
   "./index":{extractor}
 }
 
-argv = yargs.scriptName "font-extract"
+argv = yargs.scriptName "font-extractor"
   ..usage "$0 -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont.ttf"
   ..option "source",
     alias: "s",

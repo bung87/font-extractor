@@ -1,20 +1,20 @@
-# font-extract [![Build Status](https://travis-ci.org/bung/font-extract.svg?branch=master)](https://travis-ci.org/bung/font-extract) [![Npm Version](https://badgen.net/npm/v/font-extract)](https://www.npmjs.com/package/font-extract) ![npm: total downloads](https://badgen.net/npm/dt/font-extract) ![Dep](https://badgen.net/david/dep/bung/font-extract) ![license](https://badgen.net/npm/license/font-extract)  
+# font-extractor [![Build Status](https://travis-ci.org/bung/font-extractor.svg?branch=master)](https://travis-ci.org/bung/font-extractor) [![Npm Version](https://badgen.net/npm/v/font-extractor)](https://www.npmjs.com/package/font-extractor) ![npm: total downloads](https://badgen.net/npm/dt/font-extractor) ![Dep](https://badgen.net/david/dep/bung/font-extractor) ![license](https://badgen.net/npm/license/font-extractor)  
 
 ## Installation
 
-`yarn add font-extract`  
+`yarn add font-extractor`  
 
 or  
 
-`npm i --save font-extract`  
+`npm i --save font-extractor`  
 
 ## Usage  
 
-extract subset of font from text content for CJK website   
+extractor subset of font from text content for CJK website   
 supported format `ttf, eot, woff, svg`
 
 ```
-font-extract -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont
+font-extractor -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont
 
 Options:
   --version        Show version number                                 [boolean]
