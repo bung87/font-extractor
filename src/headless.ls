@@ -7,19 +7,21 @@ require!{
 
 getText = (page,url,fontName,scrollElementSelector) ->>
   await page.goto(url,waitUntil: 'networkidle2' )
-  try 
-    await page.$eval scrollElementSelector (e) !-> 
-      do 
-        e.scrollBy(0, e.scrollHeight,behavior: 'auto')
-      while e.scrollHeight - e.scrollTop != e.offsetHeight
+  if scrollElementSelector
+    try 
+      await page.$eval scrollElementSelector (e) !-> 
+        do 
+          e.scrollBy(0, e.scrollHeight,behavior: 'auto')
+        while e.scrollHeight - e.scrollTop != e.offsetHeight
   handle = new Function("eles","""
   return eles.filter((e)=> window.getComputedStyle(e).getPropertyValue("font-family").includes('#{fontName}')).reduce( ( (p,c)=> p+= c.textContent ),"" ).split("").filter( (v,i,s)=> s.indexOf(v) === i )
   """)
-  await page.waitFor 100
-  try
-    await page.waitFor (e) -> 
-        e.scrollHeight - e.scrollTop == e.offsetHeight
-    ,scrollElementSelector 
+  if scrollElementSelector
+    await page.waitFor 100
+    try
+      await page.waitFor (e) -> 
+          e.scrollHeight - e.scrollTop == e.offsetHeight
+      ,scrollElementSelector 
   text = await page.$$eval("*",handle)
   return text
 
@@ -55,7 +57,6 @@ export collect = (entry,fontName,scrollElement) ->>
   return text
 
 export extractor = (config) ->>
-  console.log config
   textArray = await collect(config.entry,config.fname,config.ss)
   transFont = fontCarrier.transfer(config.font)
   font = fontCarrier.create()
