@@ -2,19 +2,21 @@
 
 ## Installation
 
-`yarn add font-extractor`  
+`yarn add font-extractor -D`  
 
 or  
 
-`npm i --save font-extractor`  
+`npm i --save-dev font-extractor`  
 
 ## Usage  
 
 extractor subset of font from text content for CJK website   
-supported format `ttf, eot, woff, svg`
+supported format `ttf, eot, woff, svg`  
+
+### extract statically  
 
 ```
-font-extractor -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont
+font-extractor static -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont
 
 Options:
   --version        Show version number                                 [boolean]
@@ -42,7 +44,21 @@ Options:
     "output": "dist/fonts/站酷快乐体2016修订版.0aceab97.ttf"
 }
 ```
+### extract from website  
+```
+font-extractor headless -e http://139.198.17.136:8080/book/46 -o ./a.ttf --fname zkkl --ss '.books-wrapper' -f
 
+Options:
+  --version            Show version number                             [boolean]
+  --help               Show help                                       [boolean]
+  -c                   config file
+  --entry, -e          entry url                                        [string]
+  --output, -o         output file path                                 [string]
+  --fontname, --fname  font face name
+  --scroll, --ss       scroll element selector(querySelector)           [string]
+  --font, -f           font file path                                   [string]
+  --preserved, -p      preserved words                     [array] [default: []]
+```
 ## Acknowledgement  
 
 [JailBreakC/font-collector)](https://github.com/JailBreakC/font-collector)  

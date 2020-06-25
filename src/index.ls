@@ -30,6 +30,7 @@ getAllText = (config) ->>
   options = 
     nodir: true
     matchBase: true
+    ignore:["**/*.ttf","**/*.woff","**/*.woff2","**/*.eot","**/*.svg"]
   reduceFile = (p,c,i) ->>
     prev = await p
     prev += await readText(c, config.encoding)
@@ -37,7 +38,8 @@ getAllText = (config) ->>
     files = await aglob config.source,options
     files.reduce reduceFile,Promise.resolve("")
   else if typeof! config.source == "Object"
-    options.ignore = config.source.ignore
+    if typeof! config.source.ignore == "Array"
+      options.ignore ++ config.source.ignore
     files = await aglob config.source.path,options
     files.reduce reduceFile,Promise.resolve("")
 

@@ -1,5 +1,8 @@
 require!{
   puppeteer
+  mkdirp
+  path
+  "font-carrier":fontCarrier
 }
 
 getText = (page,url,fontName,scrollElementSelector) ->>
@@ -36,13 +39,14 @@ export collect = (entry,fontName,scrollElement) ->>
   entryNom = entryURL.toString!
   visited = [entryNom]
   pages = []
-  for href in hrefs
+  filtered = hrefs.filter (x) -> x.startsWith("http")
+  for href in filtered
     url = new URL(href)
     urlS = url.toString!
     if visited.indexOf(urlS) == -1 and url.origin == entryURL.origin
         pages.push urlS
   while p = pages.shift!
-    text = text ++ await getText(page,p,font)
+    text = text ++ await getText(page,p,fontName)
     visited.push p
   text = text.filter( (v,i,s)-> s.indexOf(v) === i )#.join("")
   console.log text
@@ -51,6 +55,7 @@ export collect = (entry,fontName,scrollElement) ->>
   return text
 
 export extractor = (config) ->>
+  console.log config
   textArray = await collect(config.entry,config.fname,config.ss)
   transFont = fontCarrier.transfer(config.font)
   font = fontCarrier.create()
