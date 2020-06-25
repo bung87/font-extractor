@@ -7,7 +7,6 @@ require!{
   util
   fs
   "./index":{extractor}
-  "./headless":{extractor:headlessExtractor}
 }
 
 statical = (yargs) ->
@@ -71,7 +70,9 @@ headless = (yargs) ->
 yargs.scriptName "font-extractor"
   .command "static","collect text from files",statical,(argv) -> extractor argv
   .example "$0 static -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont.ttf"
-  .command "headless","collect text from website",headless,(argv) -> headlessExtractor argv
+  .command "headless","collect text from website",headless,(argv) -> 
+    require!{"./headless":{extractor:headlessExtractor}}
+    headlessExtractor argv
   .example "$0 headless -e http://139.198.17.136:8080/book/46 -o ./a.ttf --fname zkkl --ss '.books-wrapper' -f ./src/assets/fonts/站酷快乐体2016修订版.ttf"
   .help!
   .argv

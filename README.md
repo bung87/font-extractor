@@ -10,8 +10,11 @@ or
 
 ## Usage  
 
-extractor subset of font from text content for CJK website   
+extract subset of font from text content or website for CJK website  
+
 supported format `ttf, eot, woff, svg`  
+
+`puppeteer` as `optionalDependencies` if you'd like use headless mode extract from website  
 
 ### extract statically  
 
