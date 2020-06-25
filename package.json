@@ -1,6 +1,6 @@
 {
   "name": "font-extractor",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "",
   "main": "dist/index",
   "scripts": {
@@ -36,7 +36,7 @@
     "mkdirp": "^1.0.4",
     "yargs": "^15.3.1"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "puppeteer": "^4.0.1"
   }
 }
