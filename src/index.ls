@@ -1,14 +1,14 @@
 require!{
   fs
   "iconv-lite":iconv
-  glob
+  "fast-glob":glob
   mkdirp
   path
   "font-carrier":fontCarrier
   util
   'perf_hooks':{ performance }
 }
-aglob = util.promisify glob
+
 readFile = util.promisify(fs.readFile)
 
 readText = (file, encoding = "utf-8") ->>
@@ -33,15 +33,15 @@ getAllText = (config) ->>
     ignore:["**/*.ttf","**/*.woff","**/*.woff2","**/*.eot","**/*.svg"]
   reduceFile = (p,c,i) ->>
     prev = await p
-    prev += await readText(c, config.encoding)
+    prev ++ await readText(c, config.encoding)
   if typeof! config.source == "String"
-    files = await aglob config.source,options
-    files.reduce reduceFile,Promise.resolve("")
+    files = await glob config.source,options
+    files.reduce reduceFile,Promise.resolve([])
   else if typeof! config.source == "Object"
     if typeof! config.source.ignore == "Array"
       options.ignore ++ config.source.ignore
-    files = await aglob config.source.path,options
-    files.reduce reduceFile,Promise.resolve("")
+    files = await glob config.source.path,options
+    files.reduce reduceFile,Promise.resolve([])
 
 export extractor = (config) ->>
   start = performance.now()

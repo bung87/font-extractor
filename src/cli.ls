@@ -1,10 +1,7 @@
 ``#!/usr/bin/env node``
 require!{
   path
-  process
   yargs
-  glob
-  util
   fs
   "./index":{extractor}
 }

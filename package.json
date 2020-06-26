@@ -30,8 +30,8 @@
     "livescript": "^1.6.0"
   },
   "dependencies": {
+    "fast-glob": "^3.2.4",
     "font-carrier": "^0.2.0",
-    "glob": "^7.1.6",
     "iconv-lite": "^0.6.0",
     "mkdirp": "^1.0.4",
     "yargs": "^15.3.1"
