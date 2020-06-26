@@ -46,11 +46,12 @@ getAllText = (config) ->>
 export extractor = (config) ->>
   start = performance.now()
   textArray = await getAllText(config)
-  transFont = extract(config,config.preserved.concat textArray)
+  words = config.preserved.concat textArray
+  transFont = extract(config,words)
   mkdirp.sync(path.dirname(config.output))
   transFont.output path: config.output
   dur = performance.now() - start
   glyph = Object.keys(transFont.allGlyph()).length
-  console.log "glyph size:#{glyph} collected size:#{textArray.length}\n #{textArray} \nextraction takes:#{dur} milliseconds."
+  console.log "glyph size:#{glyph} collected size:#{words.length}\n #{words} \nextraction takes:#{dur} milliseconds."
     
   
