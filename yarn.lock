@@ -336,15 +336,14 @@ find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
-font-carrier@^0.2.0:
+"font-carrier@git+https://github.com/bung87/font-carrier.git":
   version "0.2.0"
-  resolved "https://r.cnpmjs.org/font-carrier/download/font-carrier-0.2.0.tgz#d5bc8568535e46f5bafc2403b3324b3c5a2c8c8c"
-  integrity sha1-1byFaFNeRvW6/CQDszJLPFosjIw=
+  resolved "git+https://github.com/bung87/font-carrier.git#c50edc91bee734ad0b61a2a0568978f8d8d5be79"
   dependencies:
     lodash "^4.17.15"
     multiline "^2.0.0"
-    opentype.js "^1.1.0"
-    svg2ttf "^4.3.0"
+    opentype.js "^1.3.3"
+    svg2ttf "^5.0.0"
     svg_pathify "^0.0.8"
     svgpath "^2.2.2"
     ttf2eot "^2.0.0"
@@ -737,7 +736,7 @@ once@^1.3.0:
   dependencies:
     wrappy "1"
 
-opentype.js@^1.1.0:
+opentype.js@^1.3.3:
   version "1.3.3"
   resolved "https://r.cnpmjs.org/opentype.js/download/opentype.js-1.3.3.tgz#65b8645b090a1ad444065b784d442fa19d1061f6"
   integrity sha1-ZbhkWwkKGtREBlt4TUQvoZ0QYfY=
@@ -1037,10 +1036,10 @@ strip-indent@^2.0.0:
   resolved "https://r.cnpmjs.org/strip-indent/download/strip-indent-2.0.0.tgz#5ef8db295d01e6ed6cbf7aab96998d7822527b68"
   integrity sha1-XvjbKV0B5u1sv3qrlpmNeCJSe2g=
 
-svg2ttf@^4.3.0:
-  version "4.3.0"
-  resolved "https://r.cnpmjs.org/svg2ttf/download/svg2ttf-4.3.0.tgz#433440c7e9062f8fdcec3cad721cd08a2c7e51e3"
-  integrity sha1-QzRAx+kGL4/c7DytchzQiix+UeM=
+svg2ttf@^5.0.0:
+  version "5.0.0"
+  resolved "https://r.cnpmjs.org/svg2ttf/download/svg2ttf-5.0.0.tgz#834d5cc61c9ac14fa9f6ad2aa5a9736090e46204"
+  integrity sha1-g01cxhyawU+p9q0qpalzYJDkYgQ=
   dependencies:
     argparse "^1.0.6"
     cubic2quad "^1.0.0"

@@ -2,7 +2,7 @@ require!{
   puppeteer
   mkdirp
   path
-  "font-carrier":fontCarrier
+  "./util": { extract }
 }
 
 getText = (page,url,fontName,scrollElementSelector) ->>
@@ -26,7 +26,7 @@ getText = (page,url,fontName,scrollElementSelector) ->>
   return text
 
 export collect = (entry,fontName,scrollElement) ->>
-  browser = await puppeteer.launch()
+  browser = await puppeteer.launch( args: ['--no-sandbox', '--disable-setuid-sandbox'])
   page = await browser.newPage()
   await page.setRequestInterception(true)
   page.setDefaultTimeout(6000)
@@ -62,9 +62,6 @@ export collect = (entry,fontName,scrollElement) ->>
 
 export extractor = (config) ->>
   textArray = await collect(config.entry,config.fname,config.ss)
-  transFont = fontCarrier.transfer(config.font)
-  font = fontCarrier.create()
-  gs = transFont.getGlyph(config.preserved.concat textArray)
-  font.setGlyph(gs)
+  transFont = extract(config,textArray)
   mkdirp.sync(path.dirname(config.output))
-  font.output path: config.output
+  transFont.output path: config.output
