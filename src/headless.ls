@@ -9,7 +9,7 @@ getText = (page,url,fontName,scrollElementSelector) ->>
   await page.goto(url,waitUntil: 'networkidle2' )
   if scrollElementSelector
     try 
-      await page.$eval scrollElementSelector (e) !-> 
+      await page.$eval scrollElementSelector, (e) !-> 
         do 
           e.scrollBy(0, e.scrollHeight,behavior: 'auto')
         while e.scrollHeight - e.scrollTop != e.offsetHeight
