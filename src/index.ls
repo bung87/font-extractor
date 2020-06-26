@@ -46,7 +46,7 @@ getAllText = (config) ->>
 export extractor = (config) ->>
   start = performance.now()
   textArray = await getAllText(config)
-  transFont = extract(config,textArray)
+  transFont = extract(config,config.preserved.concat textArray)
   mkdirp.sync(path.dirname(config.output))
   transFont.output path: config.output
   dur = performance.now() - start

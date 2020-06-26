@@ -62,6 +62,6 @@ export collect = (entry,fontName,scrollElement) ->>
 
 export extractor = (config) ->>
   textArray = await collect(config.entry,config.fname,config.ss)
-  transFont = extract(config,textArray)
+  transFont = extract(config,config.preserved.concat textArray)
   mkdirp.sync(path.dirname(config.output))
   transFont.output path: config.output
