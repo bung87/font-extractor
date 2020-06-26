@@ -46,13 +46,28 @@ getAllText = (config) ->>
 export extractor = (config) ->>
   start = performance.now()
   textArray = await getAllText(config)
-  transFont = fontCarrier.transfer(config.font)
-  font = fontCarrier.create()
-  gs = transFont.getGlyph(config.preserved.concat textArray)
-  font.setGlyph(gs)
+  parsedFontObject = fontCarrier.engine.parse(config.font)
+  transFont = new fontCarrier.Font(parsedFontObject.options)
+  transFont.setFontface(parsedFontObject.fontface)
+  keys = config.preserved.concat textArray .map (key) ->  fontCarrier.helper.normalizeUnicode(key).toLowerCase!
+  glyphs = parsedFontObject.glyphs
+  for k in keys
+    glyph = glyphs[k] if k of glyphs
+  # for k, glyph of parsedFontObject.glyphs when k in keys
+    tmplGlyph = new fontCarrier.Glyph(glyph)
+    tmplGlyph.__font = transFont
+    transFont.__glyphs[k] = tmplGlyph
+
+  # transFont = fontCarrier.transfer(config.font)
+  # font = fontCarrier.create()
+  # gs = transFont.getGlyph(config.preserved.concat textArray)
+  # font.setGlyph(gs)
+
   mkdirp.sync(path.dirname(config.output))
-  font.output path: config.output
+  transFont.output path: config.output
   dur = performance.now() - start
-  console.log "collected: #{textArray} \nextraction takes:#{dur} milliseconds."
+  # Glyph count	38 on mac,glyph size:145 collected size:207
+  glyph = Object.keys(transFont.allGlyph()).length
+  console.log "glyph size:#{glyph} collected size:#{textArray.length}\n #{textArray} \nextraction takes:#{dur} milliseconds."
     
   
