@@ -18,6 +18,8 @@ supported format `ttf, eot, woff, svg`
 
 ### extract statically  
 
+extract from local files literal string.  
+
 ```
 font-extractor static -f test/lib/handfont.ttf -s test/index.html -o test/fonts/handfont
 
@@ -48,6 +50,9 @@ Options:
 }
 ```
 ### extract from website  
+
+extract text styled with specific font face name in web page.   
+
 ```
 font-extractor headless -e http://139.198.17.136:8080/book/46 -o ./a.ttf --fname zkkl --ss '.books-wrapper' -f
 
@@ -64,6 +69,6 @@ Options:
 ```
 ## Acknowledgement  
 
-[JailBreakC/font-collector)](https://github.com/JailBreakC/font-collector)  
+[JailBreakC/font-collector](https://github.com/JailBreakC/font-collector)  
 
 [purplebamboo/font-carrier](https://github.com/purplebamboo/font-carrier)  
