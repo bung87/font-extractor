@@ -33,7 +33,7 @@ statical = (yargs) ->
     JSON.parse fs.readFileSync(configPath, 'utf-8')
     
   .coerce(['font', 'output','config'], path.resolve)
-  .demandOption(['source', 'font','output'], 'Please provide both run and path arguments to work with this tool')
+  .demandOption(['source', 'font','output'], 'Please provide both source,font and output arguments to work with this tool')
 
 headless = (yargs) ->
   yargs.config 'c', "config file", (configPath) -> 
@@ -70,6 +70,6 @@ yargs.scriptName "font-extractor"
   .command "headless","collect text from website",headless,(argv) -> 
     require!{"./headless":{extractor:headlessExtractor}}
     headlessExtractor argv
-  .example "$0 headless -e http://139.198.17.136:8080/book/46 -o ./a.ttf --fname zkkl --ss '.books-wrapper' -f ./src/assets/fonts/站酷快乐体2016修订版.ttf"
+  .example "$0 headless -e http://139.198.17.136:8080/book/46 -o ./a.ttf --fname zkkl --ss '.books-wrapper' -f ./src/assets/fonts/站酷快乐体.ttf"
   .help!
   .argv

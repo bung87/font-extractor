@@ -1,0 +1,8 @@
+max-line-length:
+  level: \warning
+  value: 120
+
+naming-conventions:
+  level: \ignore
+braces-spacing:
+  level: \ignore

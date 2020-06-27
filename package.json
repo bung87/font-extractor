@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "watch": "lsc -wco dist src",
+    "lint": "ls-lint \"{./**/*.ls?(on),!**/node_modules}\"",
     "build": "lsc -co dist src",
     "prepublishOnly": "npm run clean && npm run build",
     "test": "lsc tests"
@@ -27,7 +28,8 @@
   "author": "bung",
   "license": "MIT",
   "devDependencies": {
-    "livescript": "^1.6.0"
+    "livescript": "^1.6.0",
+    "ls-lint": "^0.1.2"
   },
   "dependencies": {
     "fast-glob": "^3.2.4",

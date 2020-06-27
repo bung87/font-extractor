@@ -12,13 +12,13 @@ require!{
 readFile = util.promisify(fs.readFile)
 
 readText = (file, encoding = "utf-8") ->>
-  encoding = encoding.toLowerCase!
+  _encoding = encoding.toLowerCase!
   bin = await readFile file
-  if encoding == "utf-8"
+  if _encoding == "utf-8"
     if (bin[0] == 0xEF && bin[1] == 0xBB && bin[2] == 0xBF) 
       bin = bin.slice(3)
     content = bin.toString("utf-8")
-  else if encoding == "gbk"
+  else if _encoding == "gbk"
     content = iconv.decode(bin, "gbk")
 
   content.split("").filter (value, index, self) ->

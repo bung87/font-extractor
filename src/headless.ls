@@ -14,13 +14,18 @@ getText = (page,url,fontName,scrollElementSelector) ->>
           e.scrollBy(0, e.scrollHeight,behavior: 'auto')
         while e.scrollHeight - e.scrollTop != e.offsetHeight
   handle = new Function("eles","""
-  return eles.filter((e)=> window.getComputedStyle(e).getPropertyValue("font-family").split(",").map( (x) => x.trim() ).includes('#{fontName}')).reduce( ( (p,c)=> p+= c.textContent ),"" ).split("").filter( (v,i,s)=> s.indexOf(v) === i )
+  return eles.filter((e)=> window.getComputedStyle(e).getPropertyValue("font-family")
+  .split(",").map( (x) => x.trim() )
+  .includes('#{fontName}'))
+  .reduce( ( (p,c)=> p+= c.textContent ),"" )
+  .split("")
+  .filter( (v,i,s)=> s.indexOf(v) === i )
   """)
   if scrollElementSelector
     await page.waitFor 100
     try
       await page.waitFor (e) -> 
-          e.scrollHeight - e.scrollTop == e.offsetHeight
+        e.scrollHeight - e.scrollTop == e.offsetHeight
       ,scrollElementSelector 
   text = await page.$$eval("*",handle)
   return text
@@ -50,7 +55,7 @@ export collect = (entry,fontName,scrollElement) ->>
       continue
     urlS = url.toString!
     if visited.indexOf(urlS) == -1 and url.origin == entryURL.origin
-        pages.push urlS
+      pages.push urlS
   while p = pages.shift!
     text = text ++ await getText(page,p,fontName)
     visited.push p

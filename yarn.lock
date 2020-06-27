@@ -404,6 +404,14 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+glob-all@^3.1.0:
+  version "3.2.1"
+  resolved "https://r.cnpmjs.org/glob-all/download/glob-all-3.2.1.tgz#082ca81afd2247cbd3ed2149bb2630f4dc877d95"
+  integrity sha1-CCyoGv0iR8vT7SFJuyYw9NyHfZU=
+  dependencies:
+    glob "^7.1.2"
+    yargs "^15.3.1"
+
 glob-parent@^5.1.0:
   version "5.1.1"
   resolved "https://r.cnpmjs.org/glob-parent/download/glob-parent-5.1.1.tgz#b6c1ef417c4e5663ea498f1c45afac6916bbc229"
@@ -411,7 +419,7 @@ glob-parent@^5.1.0:
   dependencies:
     is-glob "^4.0.1"
 
-glob@^7.0.3, glob@^7.1.3:
+glob@^7.0.3, glob@^7.1.2, glob@^7.1.3:
   version "7.1.6"
   resolved "https://r.cnpmjs.org/glob/download/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha1-FB8zuBp8JJLhJVlDB0gMRmeSeKY=
@@ -567,7 +575,7 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-livescript@^1.6.0:
+livescript@^1.5.0, livescript@^1.6.0:
   version "1.6.0"
   resolved "https://r.cnpmjs.org/livescript/download/livescript-1.6.0.tgz#5c4e3860109640bb6a4a0441e4dd13f4eb0e7f0a"
   integrity sha1-XE44YBCWQLtqSgRB5N0T9OsOfwo=
@@ -598,6 +606,16 @@ lodash@^4.17.10, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://r.cnpmjs.org/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+
+ls-lint@^0.1.2:
+  version "0.1.2"
+  resolved "https://r.cnpmjs.org/ls-lint/download/ls-lint-0.1.2.tgz#e2fe05056f2729af70e6d19c18edfd3ad0769cb7"
+  integrity sha1-4v4FBW8nKa9w5tGcGO39OtB2nLc=
+  dependencies:
+    glob-all "^3.1.0"
+    livescript "^1.5.0"
+    optionator "^0.8.2"
+    prelude-ls "^1.1.2"
 
 merge2@^1.3.0:
   version "1.4.1"
@@ -744,7 +762,7 @@ opentype.js@^1.3.3:
     string.prototype.codepointat "^0.2.1"
     tiny-inflate "^1.0.3"
 
-optionator@~0.8.2:
+optionator@^0.8.2, optionator@~0.8.2:
   version "0.8.3"
   resolved "https://r.cnpmjs.org/optionator/download/optionator-0.8.3.tgz#84fa1d036fe9d3c7e21d99884b601167ec8fb495"
   integrity sha1-hPodA2/p08fiHZmIS2ARZ+yPtJU=
@@ -817,6 +835,11 @@ picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
   resolved "https://r.cnpmjs.org/picomatch/download/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
   integrity sha1-IfMz6ba46v8CRo9RRupAbTRfTa0=
+
+prelude-ls@^1.1.2:
+  version "1.2.1"
+  resolved "https://r.cnpmjs.org/prelude-ls/download/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
+  integrity sha1-3rxkidem5rDnYRiIzsiAM30xY5Y=
 
 prelude-ls@~1.1.2:
   version "1.1.2"
