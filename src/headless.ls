@@ -1,5 +1,5 @@
 require!{
-  
+  "puppeteer-cluster":{Cluster}
   mkdirp
   path
   "./util": { extract }
@@ -32,18 +32,29 @@ getText = (page,url,fontName,scrollElementSelector,timeWait) ->>
   text = await page.$$eval("*",handle)
   return text
 
-export collect = (entry,fontName,scrollElement,timeWait) ->>
-  browser = await puppeteer.launch( args: ['--no-sandbox', '--disable-setuid-sandbox'])
-  page = await browser.newPage()
+reqHandle = (req) ->
+  if req.resourceType() == 'image' or req.resourceType() == 'font'
+    req.abort()
+  else
+    req.continue()
+
+getTextTask = ({page,data}) ->>
   await page.setRequestInterception(true)
   page.setDefaultTimeout(6000)
-  page.on 'request' (req) ->
-    if req.resourceType() == 'image' or req.resourceType() == 'font'
-      req.abort()
-    else
-      req.continue()
-  text = await getText(page,entry,fontName,scrollElement,timeWait)
-  hrefs = await page.$$eval("a",(l) -> l.map( (v) -> v.href))
+  page.on 'request' reqHandle
+  await getText(page,data.url,data.fontName,data.scrollElementSelector,data.timeWait)
+
+export collect = (entry,fontName,scrollElement,timeWait) ->>
+  cluster = await Cluster.launch(puppeteer:puppeteer,concurrency: Cluster.CONCURRENCY_CONTEXT,
+        maxConcurrency: 4,puppeteerOptions:{args: ['--no-sandbox', '--disable-setuid-sandbox']} )
+  await cluster.task getTextTask
+  text = await cluster.execute({url:entry,fontName,scrollElementSelector:scrollElement,timeWait}) 
+  hrefs = await cluster.execute(entry,({page,data:url}) ->> 
+    await page.setRequestInterception(true)
+    page.on 'request' reqHandle
+    await page.goto(url,waitUntil: 'networkidle2' )
+    await page.$$eval("a",(l) -> l.map( (v) -> v.href)))
+
   entryURL = new URL(entry)
   entryNom = entryURL.toString!
   visited = [entryNom]
@@ -58,13 +69,20 @@ export collect = (entry,fontName,scrollElement,timeWait) ->>
     urlS = url.toString!
     if visited.indexOf(urlS) == -1 and url.origin == entryURL.origin
       pages.push urlS
+  pp = []
   while p = pages.shift!
-    text = text ++ await getText(page,p,fontName)
+    # text = text ++ await getText(page,p,fontName)
+    pp.push cluster.execute({url:p,fontName,scrollElementSelector:scrollElement,timeWait}) 
     visited.push p
+  tt = await Promise.all pp
+  for t in tt
+    text = text ++ t
   text = text.filter( (v,i,s)-> s.indexOf(v) === i )
   console.log text
-  await page.close()
-  await browser.close()
+  await cluster.idle()
+  await cluster.close()
+  # await page.close()
+  # await browser.close()
   return text
 
 export extractor = (config) ->>
