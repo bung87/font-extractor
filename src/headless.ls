@@ -1,11 +1,13 @@
 require!{
-  puppeteer
+  
   mkdirp
   path
   "./util": { extract }
 }
+importCwd = require('import-cwd')
+puppeteer = importCwd('puppeteer')
 
-getText = (page,url,fontName,scrollElementSelector) ->>
+getText = (page,url,fontName,scrollElementSelector,timeWait) ->>
   await page.goto(url,waitUntil: 'networkidle2' )
   if scrollElementSelector
     try 
@@ -22,7 +24,7 @@ getText = (page,url,fontName,scrollElementSelector) ->>
   .filter( (v,i,s)=> s.indexOf(v) === i )
   """)
   if scrollElementSelector
-    await page.waitFor 100
+    await page.waitFor timeWait
     try
       await page.waitFor (e) -> 
         e.scrollHeight - e.scrollTop == e.offsetHeight
@@ -30,7 +32,7 @@ getText = (page,url,fontName,scrollElementSelector) ->>
   text = await page.$$eval("*",handle)
   return text
 
-export collect = (entry,fontName,scrollElement) ->>
+export collect = (entry,fontName,scrollElement,timeWait) ->>
   browser = await puppeteer.launch( args: ['--no-sandbox', '--disable-setuid-sandbox'])
   page = await browser.newPage()
   await page.setRequestInterception(true)
@@ -40,7 +42,7 @@ export collect = (entry,fontName,scrollElement) ->>
       req.abort()
     else
       req.continue()
-  text = await getText(page,entry,fontName,scrollElement)
+  text = await getText(page,entry,fontName,scrollElement,timeWait)
   hrefs = await page.$$eval("a",(l) -> l.map( (v) -> v.href))
   entryURL = new URL(entry)
   entryNom = entryURL.toString!
@@ -66,7 +68,7 @@ export collect = (entry,fontName,scrollElement) ->>
   return text
 
 export extractor = (config) ->>
-  textArray = await collect(config.entry,config.fname,config.ss)
+  textArray = await collect(config.entry,config.fname,config.ss,config.sw)
   words = config.preserved.concat textArray
   transFont = extract(config,words)
   mkdirp.sync(path.dirname(config.output))

@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "watch": "lsc -wco dist src",
-    "lint": "ls-lint \"{./**/*.ls?(on),!**/node_modules}\"",
+    "lint": "ls-lint \"{,!(node_modules)/**/}*.ls?(on)\"",
     "build": "lsc -co dist src",
     "prepublishOnly": "npm run clean && npm run build",
     "test": "lsc tests"
@@ -35,6 +35,7 @@
     "fast-glob": "^3.2.4",
     "font-carrier": "^0.2.0",
     "iconv-lite": "^0.6.0",
+    "import-cwd": "^3.0.0",
     "mkdirp": "^1.0.4",
     "yargs": "^15.3.1"
   },

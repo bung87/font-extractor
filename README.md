@@ -71,7 +71,8 @@ Options:
   --entry, -e          entry url                                        [string]
   --output, -o         output file path                                 [string]
   --fontname, --fname  font face name
-  --scroll, --ss       scroll element selector(querySelector)           [string]
+  --scroller, --ss       scroll element selector(querySelector)           [string]
+  --scrollwait --sw    time wait after scroll(ms) default:300
   --font, -f           font file path                                   [string]
   --preserved, -p      preserved words                     [array] [default: []]
 ```

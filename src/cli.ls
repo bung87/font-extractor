@@ -49,10 +49,15 @@ headless = (yargs) ->
   .option "fontname",
     alias: "fname"
     desc: "font face name"
-  .option "scroll",
+  .option "scroller",
     type: "string"
     alias: "ss"
     desc: "scroll element selector(querySelector)"
+  .option "scrollwait",
+    alias: "sw"
+    desc: "time wait after scroll(ms)"
+    default: 300
+    type: "number"
   .option "font",
     type: "string"
     alias: "f"

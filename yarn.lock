@@ -471,6 +471,20 @@ iconv-lite@^0.6.0:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+import-cwd@^3.0.0:
+  version "3.0.0"
+  resolved "https://r.cnpmjs.org/import-cwd/download/import-cwd-3.0.0.tgz#20845547718015126ea9b3676b7592fb8bd4cf92"
+  integrity sha1-IIRVR3GAFRJuqbNna3WS+4vUz5I=
+  dependencies:
+    import-from "^3.0.0"
+
+import-from@^3.0.0:
+  version "3.0.0"
+  resolved "https://r.cnpmjs.org/import-from/download/import-from-3.0.0.tgz#055cfec38cd5a27d8057ca51376d7d3bf0891966"
+  integrity sha1-BVz+w4zVon2AV8pRN219O/CJGWY=
+  dependencies:
+    resolve-from "^5.0.0"
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://r.cnpmjs.org/inflight/download/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
@@ -915,6 +929,11 @@ require-main-filename@^2.0.0:
   version "2.0.0"
   resolved "https://r.cnpmjs.org/require-main-filename/download/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
   integrity sha1-0LMp7MfMD2Fkn2IhW+aa9UqomJs=
+
+resolve-from@^5.0.0:
+  version "5.0.0"
+  resolved "https://r.cnpmjs.org/resolve-from/download/resolve-from-5.0.0.tgz#c35225843df8f776df21c57557bc087e9dfdfc69"
+  integrity sha1-w1IlhD3493bfIcV1V7wIfp39/Gk=
 
 reusify@^1.0.4:
   version "1.0.4"
