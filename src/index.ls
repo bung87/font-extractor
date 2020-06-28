@@ -52,6 +52,6 @@ export extractor = (config) ->>
   transFont.output path: config.output
   dur = performance.now() - start
   glyph = Object.keys(transFont.allGlyph()).length
-  console.log "glyph size:#{glyph} collected size:#{words.length}\n #{words} \nextraction takes:#{dur} milliseconds."
+  console.log "glyph size:#{glyph} collected size:#{textArray.length}\n #{textArray} \nextraction takes:#{dur} milliseconds."
     
   

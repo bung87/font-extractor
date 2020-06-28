@@ -71,23 +71,20 @@ export collect = (entry,fontName,scrollElement,timeWait) ->>
       pages.push urlS
   pp = []
   while p = pages.shift!
-    # text = text ++ await getText(page,p,fontName)
     pp.push cluster.execute({url:p,fontName,scrollElementSelector:scrollElement,timeWait}) 
     visited.push p
   tt = await Promise.all pp
   for t in tt
     text = text ++ t
   text = text.filter( (v,i,s)-> s.indexOf(v) === i )
-  console.log text
   await cluster.idle()
   await cluster.close()
-  # await page.close()
-  # await browser.close()
   return text
 
 export extractor = (config) ->>
   textArray = await collect(config.entry,config.fname,config.ss,config.sw)
   words = config.preserved.concat textArray
+  consol.log "collected size:#{textArray.length}\n #{textArray}"
   transFont = extract(config,words)
   mkdirp.sync(path.dirname(config.output))
   transFont.output path: config.output
