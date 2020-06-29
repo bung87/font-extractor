@@ -1,7 +1,7 @@
 require! {
   fs
   path
-  glob
+  "fast-glob":glob
 }
 glob.sync './tests/**/*.ls' .forEach ( file ) ->
   require path.resolve file 
