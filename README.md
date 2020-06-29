@@ -1,4 +1,4 @@
-# font-extractor [![Build Status](https://travis-ci.org/bung/font-extractor.svg?branch=master)](https://travis-ci.org/bung/font-extractor) [![Npm Version](https://badgen.net/npm/v/font-extractor)](https://www.npmjs.com/package/font-extractor) ![npm: total downloads](https://badgen.net/npm/dt/font-extractor) ![Dep](https://badgen.net/david/dep/bung/font-extractor) ![license](https://badgen.net/npm/license/font-extractor)  
+# font-extractor [![Build Status](https://travis-ci.org/bung/font-extractor.svg?branch=master)](https://travis-ci.org/bung/font-extractor) [![Npm Version](https://badgen.net/npm/v/font-extractor)](https://www.npmjs.com/package/font-extractor) ![npm: total downloads](https://badgen.net/npm/dt/font-extractor) ![Dep](https://badgen.net/david/dep/bung87/font-extractor) ![license](https://badgen.net/npm/license/font-extractor)  
 
 ## Installation
 
