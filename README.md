@@ -46,7 +46,7 @@ Options:
 
 ### Example config file  
 
-```
+``` json
 {
     "source": {
         "path": ["src/**/*.vue"]
@@ -76,6 +76,19 @@ Options:
   --font, -f           font file path                                   [string]
   --preserved, -p      preserved words                     [array] [default: []]
 ```
+#### Example config  
+``` json
+{
+    "fname":"zkkl",
+    "ss":".books-wrapper",
+    "p":["外","社" ,"三" ,"七","商务", "雅思","北师大","初","高中","修","小","教","十","一","上","下","册"],
+    "font": "src/assets/fonts/站酷快乐体2016修订版.ttf",
+    "entry":"http://139.198.17.136:8080/",
+    "output": "dist/fonts/站酷快乐体2016修订版.0aceab97.ttf",
+    "pages":["[60 to 80].map (x)-> 'http://139.198.17.136:8080/book/' + x "]
+}
+```
+
 ## Acknowledgement  
 
 [JailBreakC/font-collector](https://github.com/JailBreakC/font-collector)  

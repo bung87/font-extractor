@@ -67,6 +67,10 @@ headless = (yargs) ->
     desc: "preserved words"
     type: "array"
     default: []
+  .option "pages",
+    desc: "preserved pages(Array of ls expression)"
+    type: "array"
+    default: []
   .coerce(['font', 'output','config'], path.resolve)
 
 yargs.scriptName "font-extractor"

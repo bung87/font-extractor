@@ -3,6 +3,7 @@ require!{
   mkdirp
   path
   "./util": { extract }
+  "./helper": { compList }
 }
 importCwd = require('import-cwd')
 puppeteer = importCwd('puppeteer')
@@ -46,16 +47,19 @@ getTextTask = ({page,data}) ->>
   page.on 'request' reqHandle
   await getTextAndHref(page,data.url,data.fontName,data.scrollElementSelector,data.timeWait)
 
-export collect = (entry,fontName,scrollElement,timeWait) ->>
+export collect = (entry,fontName,scrollElement,timeWait,ppages) ->>
+  preservedPages = compList(ppages).map((x) -> new URL(x) .toString!) if ppages
   cluster = await Cluster.launch(puppeteer:puppeteer,concurrency: Cluster.CONCURRENCY_CONTEXT,
         maxConcurrency: 4,puppeteerOptions:{args: ['--no-sandbox', '--disable-setuid-sandbox']} )
   await cluster.task getTextTask
   [text,hrefs] = await cluster.execute({url:entry,fontName,scrollElementSelector:scrollElement,timeWait}) 
+  hrefs ++= preservedPages if preservedPages
   entryURL = new URL(entry)
   entryNom = entryURL.toString!
   visited = [entryNom]
   pages = []
-  filtered = hrefs.filter (x) -> x.startsWith("http")
+  filtered = hrefs.filter (x,i,s) -> x.startsWith("http") and s.indexOf(x) == i
+
   for href in filtered
     url = ""
     try
@@ -78,8 +82,10 @@ export collect = (entry,fontName,scrollElement,timeWait) ->>
   return text
 
 export extractor = (config) ->>
-  textArray = await collect(config.entry,config.fname,config.ss,config.sw)
-  words = config.preserved.concat textArray
+  textArray = await collect(config.entry,config.fname,config.ss,config.sw,config.pages)
+  flat = config.preserved.reduce ((p,c,i) -> p ++ c.split('')),[]
+    .filter (value, index, self) -> self.indexOf(value) == index
+  words = flat.concat textArray
   console.log "collected size:#{textArray.length}\n #{textArray}"
   transFont = extract(config,words)
   mkdirp.sync(path.dirname(config.output))
