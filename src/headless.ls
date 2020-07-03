@@ -12,14 +12,21 @@ puppeteer = importCwd('puppeteer')
 
 getTextAndHref = (page,url,fontName,scrollElementSelector,timeWait) ->>
   await page.goto(url,waitUntil: 'networkidle2' )
+  hasError = false
   if scrollElementSelector
     try 
-      await page.$eval scrollElementSelector, (e) !-> 
-        neq = true
-        do 
-          e.scrollTo(0, e.scrollHeight,behavior: 'auto')
-          neq := e.scrollHeight - e.scrollTop < e.offsetHeight
-        while neq
+      do 
+        await page.waitFor scrollElementSelector,timeout:timeWait
+        await page.$eval scrollElementSelector, (el) !-> 
+          el.scrollTo(0, el.scrollHeight,behavior: 'auto')
+        handle = await page.$(scrollElementSelector)
+        scrollHeight = await page.evaluate( ( (e) -> e.scrollHeight) , handle)
+        scrollTop = await page.evaluate( ( (e) -> e.scrollTop), handle)
+        clientHeight = await page.evaluate( ( (e) -> e.clientHeight), handle)
+      while scrollHeight - scrollTop != clientHeight
+    catch e
+      hasError = true
+      console.info e,url,scrollElementSelector
   handle = new Function("eles","""
   return eles.filter((e)=> window.getComputedStyle(e).getPropertyValue("font-family")
   .split(",").map( (x) => x.trim() )
@@ -28,7 +35,7 @@ getTextAndHref = (page,url,fontName,scrollElementSelector,timeWait) ->>
   .split("")
   .filter( (v,i,s)=> s.indexOf(v) === i )
   """)
-  if scrollElementSelector
+  if scrollElementSelector and !hasError
     await page.waitFor timeWait
   text = await page.$$eval("*",handle)
   hrefs = await page.$$eval("a",(l) -> l.map( (v) -> v.href))
@@ -43,7 +50,7 @@ reqHandle = (req) ->
 getTextTask = ({page,data}) ->>
   await page.setRequestInterception(true)
   page.setDefaultTimeout(6000)
-  # page.on('console', (msg) -> console.log('PAGE LOG:', msg.text()))
+  # page.on('console', (msg) -> console.log('PAGE LOG:', msg.text()) if msg.text().includes("Failed to load resource") == false)
   page.on 'request' reqHandle
   await getTextAndHref(page,data.url,data.fontName,data.scrollElementSelector,data.timeWait)
 
@@ -53,6 +60,7 @@ export collect = (entry,fontName,scrollElement,timeWait,ppages) ->>
         maxConcurrency: 4,puppeteerOptions:{args: ['--no-sandbox', '--disable-setuid-sandbox']} )
   await cluster.task getTextTask
   [text,hrefs] = await cluster.execute({url:entry,fontName,scrollElementSelector:scrollElement,timeWait}) 
+  console.log hrefs
   hrefs ++= preservedPages if preservedPages
   entryURL = new URL(entry)
   entryNom = entryURL.toString!
